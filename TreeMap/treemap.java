@@ -1,0 +1,95 @@
+// Ric Rodriguez rirrodri
+// $Id: treemap.java,v 1.1 2016-02-16 20:36:53-08 - - $
+
+// Development version of treemap.
+// To be deleted and replaced by an actual implementation that
+// does *NOT* use java.util.TreeMap.
+
+import static java.lang.System.*;
+
+class treemap {
+
+   class tree {
+      String key;
+      String value;
+      tree left;
+      tree right;
+   }
+   tree root = null;
+
+   public String get (String key) {;
+      tree database = find(root, key);
+      if(database==null){
+         return null;
+      }
+      return database.value;
+   }
+
+   public String put (String key, String value) {
+      if(root==null){
+         tree temp=new tree();
+         temp.value=value;
+         temp.key=key;
+         root=temp;
+         return value;
+      }
+      return put_recur(root, key, value);
+   }
+
+   public void debug_tree () {
+      inorder(root, 0);
+   }
+
+   private void debug_tree_recur (tree node, int depth) {
+   }
+   private void inorder(tree node, int depth){
+      if(node==null){
+         return;
+      }
+      inorder(node.left, depth+1);
+      inorder(node.right, depth+1);
+      out.printf("%3d \"%s\" \"%s\" %s %s%n",
+         depth, node.key, node.value, node.left, node.right);
+   }
+   private tree find(tree curr, String key){
+      if(curr==null){
+         return null;
+      }
+      if(key.compareTo(curr.key)>0){
+         return find(curr.right, key);
+      }else if (key.compareTo(curr.key)<0) {
+         return find(curr.left, key);         
+      }
+      return curr;
+   }
+   private String put_recur(tree curr, String key, String value){
+      if(curr==null){
+         return null;
+      }
+      if(key.compareTo(curr.key)<0){
+         if(curr.left==null){
+            tree temp=new tree();
+            temp.value=value;
+            temp.key=key;
+            curr.left=temp;
+            return curr.value;
+         }else{
+            return put_recur(curr.left, key, value);
+         }
+      }else if (key.compareTo(curr.key)>0) {
+         if(curr.right==null){
+            tree temp=new tree();
+            temp.value=value;
+            temp.key=key;
+            curr.right=temp;
+            return curr.value;
+         }else{
+            return put_recur(curr.right, key, value);
+         }
+      }else{
+         String database=curr.value;
+         curr.value=value;
+         return database;
+      }
+   }
+}
