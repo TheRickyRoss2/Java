@@ -1,0 +1,5 @@
+List.java -> contains the list ADT which holds manipulation procedures and access functions for the list datatype
+ListClient.java -> tester for List
+Lex.java -> indirectly sorts text files in lexicographical order
+Makefile -> procedures for making Lex.jar
+README -> catalog of these files
